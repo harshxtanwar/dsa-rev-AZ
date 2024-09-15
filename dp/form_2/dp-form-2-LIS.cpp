@@ -2,7 +2,7 @@
 using namespace std;
 
 int n; 
-vector<int> v; // intput array to perform LIS on
+vector<int> v; // input array to perform LIS on
 vector<int> dp; // dp to cache values
 
 int rec(int level){
