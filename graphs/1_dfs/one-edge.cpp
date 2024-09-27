@@ -101,3 +101,67 @@ signed main() {
     cout << totalWays << endl;
     return 0;
 }
+
+/*
+practising again 
+
+#include <bits/stdc++.h>
+using namespace std;
+#define endl "\n"
+#define int long long
+
+int n, m;
+vector<vector<int>> graph;
+vector<int> visited;
+int component = 0;
+map<int,int> mp;
+
+void dfs( int node ){
+    visited[node] = component;
+    mp[component]++;
+
+    for(auto v: graph[node]){
+        if(!visited[v]){
+            dfs(v);
+        }
+    }
+
+}
+
+signed main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+
+    cin>>n>>m;
+    graph.resize(n+1);
+    visited.assign(n+1, 0);
+
+    for(int i=0; i<m; i++){
+        int a,b; cin>>a>>b;
+        graph[a].push_back(b);
+        graph[b].push_back(a);
+    }
+
+    for(int i=1; i<=n; i++){
+        if(!visited[i]){
+            component++;
+            dfs(i);
+        }
+    }
+
+    if(mp.size()==1) cout<<0;
+    else{
+        int sum=0;
+        int sumSquare=0;
+
+        for(auto i:mp){
+            sum+=i.second;
+            sumSquare+= (i.second * i.second );
+        }
+
+        cout<<(sum*sum - sumSquare)/2;
+    }
+    
+
+}
+*/

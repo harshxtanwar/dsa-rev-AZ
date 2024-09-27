@@ -33,44 +33,40 @@ using namespace std;
 #define endl "\n"
 #define int long long
 
-int n, m;
-vector<string> visited;
-vector<string> input;
-int cnt = 0;
+int n,m; 
+vector<string> graph;
 
-void dfs(int i, int j) {
-    if (i < 0 || j < 0 || i >= n || j >= m || visited[i][j] == '1' || input[i][j] == '#') {
-        return;
-    }
+void dfs(int row, int col){
+    
+    if(row<0 || row>=n || col<0 || col>=m || graph[row][col] == '#' ) return;
+    graph[row][col] = '#';
 
-    visited[i][j] = '1';
+    dfs(row+1, col);
+    dfs(row-1, col);
+    dfs(row, col+1);
+    dfs(row, col-1);
 
-    dfs(i + 1, j);
-    dfs(i - 1, j);
-    dfs(i, j + 1);
-    dfs(i, j - 1);
 }
 
 signed main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
 
-    cin >> n >> m;
-    visited.resize(n, string(m, '0'));
-    input.resize(n);
+    cin>>n>>m;
+    graph.resize(n);
 
-    for (int i = 0; i < n; i++) {
-        cin >> input[i];
+    for(int i=0; i<n; i++){
+        cin>>graph[i];
     }
 
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++) {
-            if (visited[i][j] == '0' && input[i][j] == '.') {
+    int cnt = 0;
+    for(int i=0; i<n; i++){
+        for(int j=0; j<m; j++){
+            if(graph[i][j] != '#'){
                 cnt++;
-                dfs(i, j);
+                dfs(i,j);
             }
         }
     }
-
-    cout << cnt << endl;
+    cout<<cnt;
 }

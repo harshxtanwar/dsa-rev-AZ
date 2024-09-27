@@ -48,6 +48,7 @@ bool canBeSeated = true;
 
 void dfs(int node, int colour){
     visited[node] = colour;
+    
     for(auto v: graph[node]){
         if(!visited[v]){
             dfs(v, 3-colour);
