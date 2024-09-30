@@ -32,86 +32,50 @@ Sample Output 1
 
 #include<bits/stdc++.h>
 using namespace std;
-
-#define ll long long int
+#define int long long
 #define endl '\n'
 
-ll n, m;
+int n, m;
 vector<vector<int>> edges;
+vector<int> distt;
 
-void solve(){
-    cin >> n >> m;
-    for(ll i = 1; i<=m; i++){
-        ll a, b, c;
-        cin >> a >> b >> c;
-        edges.push_back({a, b, -c});
+signed main(){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+
+    cin>>n>>m;
+    
+    for(int i=0; i<m; i++){
+        int a,b,c; cin>>a>>b>>c;
+        edges.push_back({a,b,c});
     }
-    vector<ll> d(n+1, 1e18);
-    d[1] = 0;#include<bits/stdc++.h>
-using namespace std;
 
-#define ll long long int
-#define endl '\n'
-
-ll n, m;
-vector<vector<int>> edges;
-
-void solve(){
-    cin >> n >> m;
-    for(ll i = 1; i<=m; i++){
-        ll a, b, c;
-        cin >> a >> b >> c;
-        edges.push_back({a, b, -c});
-    }
-    vector<ll> d(n+1, 1e18);
-    d[1] = 0;
-    for(int j = 1; j<n; j++){
-        for(auto it: edges){
-            ll u = it[0], v = it[1], w = it[2];
-            if(d[v] > d[u] + w){
-                d[v] = d[u] + w;
+    distt.assign(n+1, 1e18);
+    distt[1] = 0;
+    for(int i=0; i<n-1; i++){
+        for(auto x: edges){
+            int node = x[0];
+            int nextNode = x[1];
+            int weight = x[2];
+            if(distt[nextNode] > distt[node] - weight){
+                distt[nextNode] = distt[node] - weight;
             }
         }
     }
-    bool cycle = false;
-    for(auto it: edges){
-        ll u = it[0], v = it[1], w = it[2];
-        if(d[v] > d[u] + w){
-            cycle = true;
-            break;
-        }
-    }
-    if(cycle) cout << "-1" << endl;
-    else cout << -d[n] << endl;
-}
 
-int main(){
-    ios_base::sync_with_stdio(0);
-    cin.tie(0); cout.tie(0);
-    solve();
-}
-    for(int j = 1; j<n; j++){
-        for(auto it: edges){
-            ll u = it[0], v = it[1], w = it[2];
-            if(d[v] > d[u] + w){
-                d[v] = d[u] + w;
-            }
+    bool negativeCycle = false;
+    for(auto x: edges){
+        int node = x[0];
+        int nextNode = x[1];
+        int weight = x[2];
+        if(distt[nextNode] > distt[node] - weight){
+            negativeCycle = true;
         }
     }
-    bool cycle = false;
-    for(auto it: edges){
-        ll u = it[0], v = it[1], w = it[2];
-        if(d[v] > d[u] + w){
-            cycle = true;
-            break;
-        }
-    }
-    if(cycle) cout << "-1" << endl;
-    else cout << -d[n] << endl;
-}
 
-int main(){
-    ios_base::sync_with_stdio(0);
-    cin.tie(0); cout.tie(0);
-    solve();
+    if(negativeCycle) cout<<-1;
+    else{
+        cout<<-distt[n];
+    }    
+
 }

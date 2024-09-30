@@ -31,7 +31,6 @@ Sample Output 1
 
 */
 
-
 #include <bits/stdc++.h>
 using namespace std;
 #define endl "\n"
@@ -39,33 +38,34 @@ using namespace std;
 
 int n,m;
 vector<vector<pair<int,int>>> graph;
-vector<int> dist, visited;
+vector<int> dist;
+vector<int> visited;
 
-void dijkstra(int sc_node){
-    
+void dijkstra(int st){
     priority_queue<pair<int,int>> pq;
-    pq.push({0, sc_node});
-    dist[sc_node] = 0;
+    pq.push({0, st});
+    dist[st]=0;
+    // visited[st]=1;
 
     while(!pq.empty()){
-        pair<int,int> current = pq.top();
+        pair<int,int> curr = pq.top();
         pq.pop();
 
-        if(!visited[current.second]){
-            visited[current.second] = 1;
-
-            for(auto v: graph[current.second]){
+        if(!visited[curr.second]){
+            visited[curr.second] = 1;
+            for( auto v: graph[curr.second] ){
                 int weight = v.second;
                 int node = v.first;
 
-                if(dist[node] > dist[current.second] + weight){
-                    dist[node] = dist[current.second] + weight;
+                if(dist[node] > dist[curr.second] + weight){
+                    dist[node] = dist[curr.second] + weight;
                     pq.push({-dist[node], node});
                 }
-            }
+            }    
         }
+        
 
-         
+
     }
 
 }
@@ -73,16 +73,14 @@ void dijkstra(int sc_node){
 signed main(){
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
-
+    
     cin>>n>>m;
     graph.resize(n+1);
-    dist.assign(n+1, 1e9);
+    dist.assign(n+1, 1e18);
     visited.assign(n+1, 0);
 
     for(int i=0; i<m; i++){
-        int a,b,c;
-        cin>>a>>b>>c;
-
+        int a,b,c; cin>>a>>b>>c;
         graph[a].push_back({b,c});
     }
 
@@ -92,4 +90,3 @@ signed main(){
         cout<<dist[i]<<' ';
     }
 }
-
